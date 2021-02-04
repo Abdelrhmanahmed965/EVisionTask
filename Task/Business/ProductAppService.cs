@@ -28,7 +28,7 @@ namespace Task.Business
                 productImagePath = FileUploaderHelper.UploadImage(image);
             if (string.IsNullOrWhiteSpace(productImagePath))
                 product.Photo = productImagePath;
-            if (await WebRequestHelper.SendPutRequest(product))
+            if (await WebRequestHelper.SendPutRequest(product)) 
                 result = true;
 
             return result;
