@@ -1,0 +1,96 @@
+﻿@model List<Task.Models.DTO_MVC.ProductDTO>
+@{
+    ViewBag.Title = "Index";
+}
+
+@*@Html.ActionLink("Add New Product", "Create")*@
+
+@*<table class="table">
+        <tr>
+
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                LastUpdate
+            </th>
+            <th>
+                Photo
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdate)
+                </td>
+                <td>
+                    @if (item.Photo != null)
+                    {
+                        <img src="~/Content/Image/@item.Photo" style="width:100px; height:100px" />
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-success" })
+                </td>
+                  <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-success" })
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+<div class="site-section" id="products-section">
+    <div>
+        <a href="@Url.Action("Create")" class="btn btn-black mr-1 rounded-0">Add New Product</a>
+    </div>
+    <div class="container">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-6 text-center">
+                <h2 class="section-title mb-3">Our Products</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+
+
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="product-item">
+                        <figure>
+                            <img src="~/Content/Image/@item.Photo" alt="Image" class="img-fluid" style=" width: 300px; height: 300px;">
+                        </figure>
+                        <div class="px-4">
+                            <h3><a href="@Url.Action("Details", new { id = item.Id })">@Html.DisplayFor(modelItem => item.Name)</a></h3>
+                            <br />
+                            <div>
+                                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-black mr-1 rounded-0">Edit</a>
+                                <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-black btn-outline-black ml-1 rounded-0">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

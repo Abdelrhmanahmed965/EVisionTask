@@ -1,0 +1,77 @@
+﻿@model Task.Models.DTO_MVC.ProductDTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@*<div>
+    <h4>ProductDTO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
+
+
+<div class="site-section" id="products-section">
+    <div class="container">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-6 text-center">
+                <h2 class="section-title mb-3">Our Products</h2>
+            </div>
+        </div>
+
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="product-item">
+                        <figure>
+                            <img src="~/Content/Image/@Model.Photo" alt="Image" class="img-fluid" style=" width: 300px; height: 300px;">
+                        </figure>
+                        <div class="px-4">
+                            <h3><span>Name :</span><span>  @Html.DisplayFor(modelItem => Model.Name)</span></h3>
+                            <h3><span>Price :</span><span>  @Html.DisplayFor(modelItem => Model.Price)</span></h3>
+                            <h3><span>LastUpdate :</span><span>  @Html.DisplayFor(modelItem => Model.LastUpdate) </span></h3>
+                            <br />
+                            <div>
+                                <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-black mr-1 rounded-0">Edit</a>
+                                <a href="@Url.Action("Index")" class="btn btn-black btn-outline-black ml-1 rounded-0">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
