@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,8 +10,11 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Task.Business;
 using Task.Helpers;
+using Task.Models.DTO_Api;
 using Task.Models.DTO_MVC;
 
 namespace Task.Controllers.MVC
@@ -34,6 +38,13 @@ namespace Task.Controllers.MVC
                 return HttpNotFound();
            
             return View(ProdInfo);
+        }
+
+        public async Task<ActionResult> search(string Name)
+        {
+            List<ProductDTO> listProduct = new List<ProductDTO>();
+            listProduct = await appService.ShowProductsBySearch(Name);
+            return View("Index", listProduct);
         }
 
         #region Create Product
@@ -102,5 +113,44 @@ namespace Task.Controllers.MVC
 
         #endregion
 
+        #region Export Excel Products
+
+        public void DownloadExcel()
+        {
+            var products = new System.Data.DataTable("TableProduct");
+            products.Columns.Add("Id", typeof(int));
+            products.Columns.Add("Name", typeof(string));
+            products.Columns.Add("Price", typeof(int));
+            products.Columns.Add("LastUpdate", typeof(DateTime));
+
+            ProductRepository Product_Repository = new ProductRepository();
+            var collection = Product_Repository.GetAllProducts();
+
+            foreach (var item in collection)
+            {
+                products.Rows.Add(item.Id,item.Name, item.Price , item.LastUpdate);
+            }
+
+            var grid = new GridView();
+            grid.DataSource = products;
+            grid.DataBind();
+
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=product_catalog..xls");
+            Response.ContentType = "application/ms-excel";
+
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+            grid.RenderControl(htw);
+
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+        }
+
+        #endregion
     }
 }

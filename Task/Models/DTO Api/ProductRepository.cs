@@ -40,7 +40,8 @@ namespace Task.Models.DTO_Api
                 ShowProduct.LastUpdate = DateTime.Now;
                 ShowProduct.Name = NewProduct.Name;
                 ShowProduct.Price = NewProduct.Price;
-                ShowProduct.Photo = NewProduct.Photo;
+                if (!string.IsNullOrWhiteSpace(NewProduct.Photo))
+                    ShowProduct.Photo = NewProduct.Photo;
                 _context.SaveChanges();
             
                 return ShowProduct;
@@ -59,6 +60,15 @@ namespace Task.Models.DTO_Api
                 }
                 else
                     return false;
+        }
+
+        public List<Product> SearchProduct(string Name)
+        {
+            List<Product> LstProduct = null;
+            if (!string.IsNullOrWhiteSpace(Name))
+                LstProduct = _context.products.Where(p => p.Name.ToLower().Contains(Name.ToLower())).ToList();
+
+            return LstProduct;
         }
 
         protected void Dispose()

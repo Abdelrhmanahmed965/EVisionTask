@@ -74,5 +74,13 @@ namespace Task.Business
             
             return result;
         }
+
+        public async Task<List<ProductDTO>> ShowProductsBySearch(string Name)
+        {
+            List<ProductDTO> productInfo = null;
+            if (!string.IsNullOrWhiteSpace(Name))
+                productInfo = await WebRequestHelper.SendGetRequest(Name);
+            return productInfo;
+        }
     }
 }

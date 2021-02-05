@@ -66,5 +66,14 @@ namespace Task.Controllers.Api
             else
                 return NotFound();
         }
+
+        public IHttpActionResult GetProductsFromSearch(string Name)
+        {
+            var listProduct = Product_Repository.SearchProduct(Name);
+            if (listProduct == null)
+                return NotFound();
+
+            return Ok(listProduct);
+        }
     }
 }

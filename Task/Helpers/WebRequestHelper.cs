@@ -95,5 +95,25 @@ namespace Task.Helpers
             }
             return false;
         }
+
+        public async Task<List<ProductDTO>> SendGetRequest(string Name)
+        {
+            string baseUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            List<ProductDTO> ProdInfo = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await client.GetAsync("/api/Product?Name=" + Name);
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    var ProdResponse = Res.Content.ReadAsStringAsync().Result;
+                    ProdInfo = JsonConvert.DeserializeObject<List<ProductDTO>>(ProdResponse);
+                }
+            }
+            return ProdInfo;
+        }
     }
 }
